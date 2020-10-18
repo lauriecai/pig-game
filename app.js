@@ -24,15 +24,20 @@ let dice = document.querySelector('.dice');
 var scores, activePlayer, roundScore;
 // function: start new game
 function newGame() {
+    // set variables to 0
     scores = [0,0];
     activePlayer = 0;
     roundScore = 0;
-
+    // set all displays to 0
     playerOneScore.textContent = 0;
     playerTwoScore.textContent = 0;
     playerOneRound.textContent = 0;
     playerTwoRound.textContent = 0;
+    // hide dice
     dice.style.display = 'none';
+    // active player visual treatment
+    document.querySelector('.player-0-panel').classList.add('active');
+    document.querySelector('.player-1-panel').classList.remove('active');
 }
 
 // ---------- FLOW ----------
@@ -79,6 +84,9 @@ btnHold.addEventListener('click', function() {
     // next player
     nextPlayer();
 })
+
+// new game
+btnNewGame.addEventListener('click', newGame);
 
 
 
