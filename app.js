@@ -43,11 +43,9 @@ newGame();
 btnRollDice.addEventListener('click', function() {
     // generate random number
     var roll = Math.floor(Math.random() * 6) + 1;
-
     // display dice
     dice.src = 'dice-' + roll + '.png';
     dice.style.display = 'block';
-    
     // if not 1, add number to current score; if 1, set current score to 0, change active player
     if (roll !== 1) {
         roundScore += roll;
@@ -61,18 +59,26 @@ btnRollDice.addEventListener('click', function() {
 function nextPlayer() {
     // set roundScore to 0
     roundScore = 0;
-
     // display current score as 0
     document.getElementById('current-' + activePlayer).textContent = 0;
-
     // change active player
     activePlayer === 0 ? activePlayer = 1 : activePlayer = 0;
-
     // update active player visual
     document.querySelector('.player-0-panel').classList.toggle('active');
     document.querySelector('.player-1-panel').classList.toggle('active');
-
 }
+
+// hold
+btnHold.addEventListener('click', function() {
+    // add current score to player score
+    scores[activePlayer] += roundScore;
+    // display update player score
+    document.getElementById('score-' + activePlayer).textContent = scores[activePlayer];
+    // hide dice
+    dice.style.display = 'none';
+    // next player
+    nextPlayer();
+})
 
 
 
