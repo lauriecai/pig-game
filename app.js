@@ -53,10 +53,26 @@ btnRollDice.addEventListener('click', function() {
         roundScore += roll;
         document.getElementById('current-' + activePlayer).textContent = roundScore;
     } else {
-        // next player
+        nextPlayer();
     }
-
 })
+
+// next player
+function nextPlayer() {
+    // set roundScore to 0
+    roundScore = 0;
+
+    // display current score as 0
+    document.getElementById('current-' + activePlayer).textContent = 0;
+
+    // change active player
+    activePlayer === 0 ? activePlayer = 1 : activePlayer = 0;
+
+    // update active player visual
+    document.querySelector('.player-0-panel').classList.toggle('active');
+    document.querySelector('.player-1-panel').classList.toggle('active');
+
+}
 
 
 
