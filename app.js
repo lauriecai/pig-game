@@ -40,6 +40,23 @@ function newGame() {
 newGame();
 
 // roll dice
+btnRollDice.addEventListener('click', function() {
+    // generate random number
+    var roll = Math.floor(Math.random() * 6) + 1;
+
+    // display dice
+    dice.src = 'dice-' + roll + '.png';
+    dice.style.display = 'block';
+    
+    // if not 1, add number to current score; if 1, set current score to 0, change active player
+    if (roll !== 1) {
+        roundScore += roll;
+        document.getElementById('current-' + activePlayer).textContent = roundScore;
+    } else {
+        // next player
+    }
+
+})
 
 
 
