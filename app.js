@@ -83,6 +83,9 @@ btnRollDice.addEventListener('click', function() {
     } else {
         nextPlayer();
     }
+    // assign roll to previous roll
+    var prevRoll = roll;
+    console.log(prevRoll);
 })
 
 // hold
