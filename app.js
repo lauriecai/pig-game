@@ -39,15 +39,6 @@ function newGame() {
     btnHold.style.display = 'none';
     // show winning score input
     document.querySelector('.label-group').style.display = 'block';
-    // score winning score when user clicks 'Set Winning Score'
-    document.querySelector('.btn-set').addEventListener('click', function() {
-        winningScore = document.querySelector('.winScoreInput').value;
-        console.log(winningScore);
-        // show game buttons
-        btnRollDice.style.display = 'block';
-        btnHold.style.display = 'block';
-        document.querySelector('.label-group').style.display = 'none';
-    })
     // active player visual treatment
     document.querySelector('.player-0-panel').classList.remove('active');
     document.querySelector('.player-0-panel').classList.remove('winner');
@@ -57,6 +48,7 @@ function newGame() {
     document.getElementById('name-0').textContent = 'Player 1';
     document.getElementById('name-1').textContent = 'Player 2';
 }
+
 // next player
 function nextPlayer() {
     // set roundScore to 0
@@ -74,12 +66,24 @@ function nextPlayer() {
 // start new game
    newGame();
 
+// set winning score
+document.querySelector('.btn-set').addEventListener('click', function() {
+    winningScore = document.querySelector('.winScoreInput').value;
+    console.log(winningScore);
+    document.querySelector('.instructions').textContent = 'Score ' + winningScore + ' to win!'
+    // show game buttons
+    btnRollDice.style.display = 'block';
+    btnHold.style.display = 'block';
+    document.querySelector('.label-group').style.display = 'none';
+})
+
 // roll dice
 btnRollDice.addEventListener('click', function() {
     // generate random number
     var roll = Math.floor(Math.random() * 6) + 1;
     // display dice
     dice.src = 'dice-' + roll + '.png';
+    document.querySelector('.instructions').style.display = 'none';
     dice.style.display = 'block';
     // if 6 & previous roll was 6, erase global score, then next playaer
     if (roll === 6 && prevRoll === 6) {
