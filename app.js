@@ -2,7 +2,7 @@
 GAME RULES:
 v1
 - The game has 2 players, playing in rounds
-- In each turn, a player rolls a dice as many times as he whishes. Each result get added to his ROUND score
+- In each turn, a player rolls a dice as many times as he wishes. Each result get added to his ROUND score
 - BUT, if the player rolls a 1, all his ROUND score gets lost. After that, it's the next player's turn
 - The player can choose to 'Hold', which means that his ROUND score gets added to his GLOBAL score. After that, it's the next player's turn
 - The first player to reach 100 points on GLOBAL score wins the game
@@ -18,7 +18,8 @@ v2
 let btnRollDice = document.querySelector('.btn-roll');
 let btnNewGame = document.querySelector('.btn-new');
 let btnHold = document.querySelector('.btn-hold');
-let dice = document.querySelector('.dice');
+let dice1 = document.getElementById('dice-1');
+let dice2 = document.getElementById('dice-2');
 // variables
 var scores, activePlayer, roundScore, gamePlaying, prevRoll, winningScore;
 // function: start new game
@@ -28,13 +29,15 @@ function newGame() {
     scores = [0,0];
     activePlayer = 0;
     roundScore = 0;
+    prevRoll = 0;
     // set all displays to 0
     document.getElementById('score-0').textContent = 0;
     document.getElementById('score-1').textContent = 0;
     document.getElementById('current-0').textContent = 0;
     document.getElementById('current-0').textContent = 0;
     // hide dice & buttons
-    dice.style.display = 'none';
+    dice1.style.display = 'none';
+    dice2.style.display = 'none';
     btnRollDice.style.display = 'none';
     btnHold.style.display = 'none';
     // show winning score input
@@ -80,28 +83,37 @@ document.querySelector('.btn-set').addEventListener('click', function() {
 // roll dice
 btnRollDice.addEventListener('click', function() {
     // generate random number
-    var roll = Math.floor(Math.random() * 6) + 1;
-    // display dice
-    dice.src = 'dice-' + roll + '.png';
+    var roll1 = Math.floor(Math.random() * 6) + 1;
+    var roll2 = Math.floor(Math.random() * 6) + 1;
+    // determine dice images
+    dice1.src = 'dice-' + roll1 + '.png';
+    dice2.src = 'dice-' + roll2 + '.png';
+    // add dice values into single roll value
+    roll = roll1 + roll2;
+    // hide instructions; show dice
     document.querySelector('.instructions').style.display = 'none';
-    dice.style.display = 'block';
-    // if 6 & previous roll was 6, erase global score, then next playaer
-    if (roll === 6 && prevRoll === 6) {
+    dice1.style.display = 'block';
+    dice2.style.display = 'block';
+    // if either dice is a 1, player loses current score
+    if (roll1 === 1 || roll2 === 1) {
+        roundScore = 0;
+        document.getElementById('current-' + activePlayer).textContent = 0;
+        nextPlayer();
+    // if 6 & previous roll was 6, erase global score, then next player
+    } else if (roll === 6 && prevRoll === 6) {
         scores[activePlayer] = 0;
         document.getElementById('score-' + activePlayer).textContent = 0;
         nextPlayer();
-    // if not 1, add number to current score; if 1, set current score to 0, change active player
-    } else if (roll !== 1) {
+    // (removed after introduction of second dice) if not 1, add number to current score; if 1, set current score to 0, change active player
+    } else {
         roundScore += roll;
         document.getElementById('current-' + activePlayer).textContent = roundScore;
-    } else {
-        nextPlayer();
     }
     // assign roll to previous roll
     prevRoll = roll;
     console.log(prevRoll);
 })
-
+    
 // hold
 btnHold.addEventListener('click', function() {
     // add current score to player score
@@ -112,13 +124,16 @@ btnHold.addEventListener('click', function() {
     if (scores[activePlayer] >= winningScore) {
         document.querySelector('.player-' + [activePlayer] + '-panel').classList.add('winner');
         document.querySelector('.player-' + [activePlayer] + '-panel').classList.remove('active');
-        dice.style.display = 'none';
+        document.getElementById('current-' + [activePlayer]).textContent = 0;
+        dice1.style.display = 'none';
+        dice2.style.display = 'none';
         document.getElementById('name-' + activePlayer).textContent = 'Winner!';
         gamePlaying = false;
         btnHold.style.display = 'none';
         btnRollDice.style.display = 'none';
     } else {
-        dice.style.display = 'none';
+        dice1.style.display = 'none';
+        dice2.style.display = 'none';
         nextPlayer();   
     }
 })
