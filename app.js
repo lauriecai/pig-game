@@ -15,18 +15,12 @@ v2
 
 // ---------- REFERENCE ----------
 // selectors
-let playerOne = document.getElementById('name-0');
-let playerTwo = document.getElementById('name-1');
-let playerOneScore = document.getElementById('score-0');
-let playerTwoScore = document.getElementById('score-1');
-let playerOneRound = document.getElementById('current-0');
-let playerTwoRound = document.getElementById('current-1');
 let btnRollDice = document.querySelector('.btn-roll');
 let btnNewGame = document.querySelector('.btn-new');
 let btnHold = document.querySelector('.btn-hold');
 let dice = document.querySelector('.dice');
 // variables
-var scores, activePlayer, roundScore, gamePlaying, prevRoll;
+var scores, activePlayer, roundScore, gamePlaying, prevRoll, winningScore;
 // function: start new game
 function newGame() {
     // set variables to 0
@@ -35,22 +29,33 @@ function newGame() {
     activePlayer = 0;
     roundScore = 0;
     // set all displays to 0
-    playerOneScore.textContent = 0;
-    playerTwoScore.textContent = 0;
-    playerOneRound.textContent = 0;
-    playerTwoRound.textContent = 0;
-    // hide dice
+    document.getElementById('score-0').textContent = 0;
+    document.getElementById('score-1').textContent = 0;
+    document.getElementById('current-0').textContent = 0;
+    document.getElementById('current-0').textContent = 0;
+    // hide dice & buttons
     dice.style.display = 'none';
+    btnRollDice.style.display = 'none';
+    btnHold.style.display = 'none';
+    // show winning score input
+    document.querySelector('.label-group').style.display = 'block';
+    // score winning score when user clicks 'Set Winning Score'
+    document.querySelector('.btn-set').addEventListener('click', function() {
+        winningScore = document.querySelector('.winScoreInput').value;
+        console.log(winningScore);
+        // show game buttons
+        btnRollDice.style.display = 'block';
+        btnHold.style.display = 'block';
+        document.querySelector('.label-group').style.display = 'none';
+    })
     // active player visual treatment
     document.querySelector('.player-0-panel').classList.remove('active');
     document.querySelector('.player-0-panel').classList.remove('winner');
     document.querySelector('.player-1-panel').classList.remove('active');
     document.querySelector('.player-1-panel').classList.remove('winner');
     document.querySelector('.player-0-panel').classList.add('active');
-    playerOne.textContent = 'Player 1';
-    playerTwo.textContent = 'Player 2';
-    btnHold.style.display = 'block';
-    btnRollDice.style.display = 'block';
+    document.getElementById('name-0').textContent = 'Player 1';
+    document.getElementById('name-1').textContent = 'Player 2';
 }
 // next player
 function nextPlayer() {
@@ -67,7 +72,7 @@ function nextPlayer() {
 
 // ---------- FLOW ----------
 // start new game
-newGame();
+   newGame();
 
 // roll dice
 btnRollDice.addEventListener('click', function() {
@@ -100,7 +105,7 @@ btnHold.addEventListener('click', function() {
     // display update player UI
     document.getElementById('score-' + activePlayer).textContent = scores[activePlayer];
     // check if player won game
-    if (scores[activePlayer] >= 100) {
+    if (scores[activePlayer] >= winningScore) {
         document.querySelector('.player-' + [activePlayer] + '-panel').classList.add('winner');
         document.querySelector('.player-' + [activePlayer] + '-panel').classList.remove('active');
         dice.style.display = 'none';

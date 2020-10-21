@@ -126,6 +126,13 @@ button:focus {
     outline: none;
 }
 
+input {
+    display: block;
+    text-align: center;
+    font-size: 14px;
+    letter-spacing: 1px;
+}
+
 i {
     color: #EB4D4D;
     display: inline-block;
@@ -137,15 +144,42 @@ i {
     transition: margin 0.3s;
 }
 
-.btn-new { top: 45px;}
-.btn-roll { top: 403px;}
-.btn-hold { top: 467px;}
+.btn-new { top: 45px; }
+.btn-roll { top: 403px; }
+.btn-hold { top: 467px; }
 
-.dice {
+.btn-set {
+    font-size: 14px;
+    font-weight: 800;
+    margin-top: 8px;
+    color: #EB4D4D;
+}
+
+.btn-set:hover {
+    color: #ff8181;
+}
+
+.label-group { 
+    top: 100px;
+    display: none;
+}
+
+.dice, .label-group {
     position: absolute;
     left: 50%;
-    top: 178px;
     transform: translateX(-50%);
+}
+
+input {
+    border: 1px solid rgba(184, 184, 184, 0.8);
+    background: #fff;
+    border-radius: 4px;
+    margin-top: 5px;
+    height: 36px;
+}
+
+.dice {
+    top: 220px;
     height: 100px;
     box-shadow: 0px 10px 60px rgba(0, 0, 0, 0.10);
 }
