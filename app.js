@@ -26,7 +26,7 @@ let btnNewGame = document.querySelector('.btn-new');
 let btnHold = document.querySelector('.btn-hold');
 let dice = document.querySelector('.dice');
 // variables
-var scores, activePlayer, roundScore, gamePlaying;
+var scores, activePlayer, roundScore, gamePlaying, prevRoll;
 // function: start new game
 function newGame() {
     // set variables to 0
@@ -76,15 +76,20 @@ btnRollDice.addEventListener('click', function() {
     // display dice
     dice.src = 'dice-' + roll + '.png';
     dice.style.display = 'block';
+    // if 6 & previous roll was 6, erase global score, then next playaer
+    if (roll === 6 && prevRoll === 6) {
+        scores[activePlayer] = 0;
+        document.getElementById('score-' + activePlayer).textContent = 0;
+        nextPlayer();
     // if not 1, add number to current score; if 1, set current score to 0, change active player
-    if (roll !== 1) {
+    } else if (roll !== 1) {
         roundScore += roll;
         document.getElementById('current-' + activePlayer).textContent = roundScore;
     } else {
         nextPlayer();
     }
     // assign roll to previous roll
-    var prevRoll = roll;
+    prevRoll = roll;
     console.log(prevRoll);
 })
 
