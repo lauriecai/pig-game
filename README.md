@@ -1,7 +1,3 @@
-A simple JavaScript project
-
------
-
 Welcome to: Pig Game
 
 Game Rules
